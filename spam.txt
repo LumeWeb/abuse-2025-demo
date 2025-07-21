@@ -1,0 +1,27 @@
+Dear Lumeweb Abuse Team,
+
+We are writing to report a spam campaign that appears to be originating from your infrastructure.
+
+Campaign Details:
+Type: Spam
+Target: General internet users
+First Observed: November 16, 2023
+Threat Level: Low
+Technical Indicators:
+Spam Content URL: https://ipfs.io/ipfs/bafyreia2foy37tjgwrbb2eynotzpasc42ijrmyn5ibdiibgbxdwiu64udm
+Source: Unsolicited email campaigns
+Description: The linked IPFS content contains unsolicited commercial advertisements and appears to be part of a wider spam campaign.
+
+Requested Action:
+Investigation of the IPFS content and associated accounts.
+Consideration of rate-limiting or other measures to prevent further spam.
+
+We appreciate your prompt attention to this matter. Please acknowledge receipt and provide a status update within 48 hours.
+
+Abuse Desk: abuse@example.org
+Phone: +1 (555) 123-4567
+Regards,
+Alex Carter
+Security Response Team
+CyberDefense Inc.
+https://www.cyberdefense.example/abuse

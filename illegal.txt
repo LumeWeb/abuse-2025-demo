@@ -1,0 +1,27 @@
+Dear Lumeweb Abuse Team,
+
+We are writing to report content that is illegal or harmful and is being hosted on your infrastructure.
+
+Campaign Details:
+Type: Illegal or Harmful Content
+Target: General public
+First Observed: November 16, 2023
+Threat Level: Critical
+Technical Indicators:
+Illegal or Harmful Content URL: https://ipfs.io/ipfs/bafyreieldgushoug5wvd4eh2irk3nw7b72nxemmvpcl57zrq2iialub66a
+Description: The linked IPFS content contains [Describe the illegal or harmful content].
+
+Requested Action:
+Immediate takedown of the illegal or harmful content.
+Investigation of the user who uploaded the content.
+Report to law enforcement if applicable.
+
+We appreciate your prompt attention to this matter. Please acknowledge receipt and provide a status update within 12 hours.
+
+Abuse Desk: abuse@example.org
+Phone: +1 (555) 123-4567
+Regards,
+Alex Carter
+Security Response Team
+CyberDefense Inc.
+https://www.cyberdefense.example/abuse

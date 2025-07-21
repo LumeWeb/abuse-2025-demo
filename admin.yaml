@@ -1,0 +1,2956 @@
+components:
+  schemas:
+    BlockContentCreateRequest:
+      additionalProperties: false
+      properties:
+        action:
+          type: string
+        case_id:
+          type: integer
+        description:
+          type: string
+        expires_at:
+          format: date-time
+          type: string
+        file_name:
+          type: string
+        hash:
+          type: string
+        metadata:
+          type: string
+        mime_type:
+          type: string
+        reason:
+          type: string
+        severity:
+          type: string
+        size:
+          type: integer
+        source:
+          type: string
+        uploader_id:
+          type: integer
+      required:
+      - hash
+      - reason
+      - severity
+      - action
+      type: object
+    BlockContentResponse:
+      additionalProperties: false
+      properties:
+        action:
+          type: string
+        blocked_by:
+          type: integer
+        case_id:
+          type: integer
+        created_at:
+          format: date-time
+          type: string
+        description:
+          type: string
+        expires_at:
+          format: date-time
+          type: string
+        file_name:
+          type: string
+        hash:
+          type: string
+        id:
+          type: integer
+        metadata:
+          additionalProperties: true
+          title: JSON Data
+          type: object
+        mime_type:
+          type: string
+        reason:
+          type: string
+        reviewed_at:
+          format: date-time
+          type: string
+        severity:
+          type: string
+        size:
+          type: integer
+        source:
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+        uploader_id:
+          type: integer
+      required:
+      - id
+      - hash
+      - reason
+      - severity
+      - action
+      - blocked_by
+      - created_at
+      - updated_at
+      type: object
+    BlockReasonCountResponse:
+      additionalProperties: false
+      properties:
+        block_date:
+          type: string
+        count:
+          type: integer
+        reason:
+          type: string
+      required:
+      - block_date
+      - reason
+      - count
+      type: object
+    BlockReasonListResponse:
+      additionalProperties: false
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/BlockReasonCountResponse'
+          type: array
+      required:
+      - items
+      type: object
+    BlocklistMetrics:
+      additionalProperties: false
+      properties:
+        by_reason:
+          items:
+            $ref: '#/components/schemas/Distribution'
+          type: array
+        by_severity:
+          items:
+            $ref: '#/components/schemas/Distribution'
+          type: array
+        total_blocks:
+          type: integer
+      required:
+      - total_blocks
+      - by_reason
+      - by_severity
+      type: object
+    CaseAnalyticsResponse:
+      additionalProperties: false
+      properties:
+        avg_status_durations:
+          items:
+            $ref: '#/components/schemas/DurationDistribution'
+          type: array
+        blocklist:
+          $ref: '#/components/schemas/BlocklistMetrics'
+        case_type_distribution:
+          items:
+            $ref: '#/components/schemas/Distribution'
+          type: array
+        communications:
+          $ref: '#/components/schemas/CommunicationsMetrics'
+        evidence:
+          $ref: '#/components/schemas/EvidenceMetrics'
+        needs_review_count:
+          type: integer
+        new_cases:
+          type: integer
+        open_cases:
+          type: integer
+        resolution_metrics:
+          $ref: '#/components/schemas/ResolutionMetrics'
+        source_distribution:
+          items:
+            $ref: '#/components/schemas/Distribution'
+          type: array
+        status_distribution:
+          items:
+            $ref: '#/components/schemas/Distribution'
+          type: array
+        status_durations:
+          items:
+            $ref: '#/components/schemas/DurationDistribution'
+          type: array
+        total_cases:
+          type: integer
+      required:
+      - total_cases
+      - open_cases
+      - new_cases
+      - needs_review_count
+      - status_distribution
+      - case_type_distribution
+      - source_distribution
+      - resolution_metrics
+      - status_durations
+      - avg_status_durations
+      - communications
+      - evidence
+      - blocklist
+      type: object
+    CaseResponse:
+      additionalProperties: false
+      properties:
+        communications:
+          items:
+            $ref: '#/components/schemas/CommunicationResponse'
+          type: array
+        created_at:
+          format: date-time
+          type: string
+        description:
+          type: string
+        id:
+          type: integer
+        needs_review:
+          type: boolean
+        priority:
+          type: string
+        reference_number:
+          type: string
+        reporter_id:
+          type: integer
+        scans:
+          items:
+            $ref: '#/components/schemas/ScanResponse'
+          type: array
+        source:
+          type: string
+        status:
+          type: string
+        subject_id:
+          type: integer
+        type:
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+      required:
+      - id
+      - created_at
+      - updated_at
+      - reference_number
+      - type
+      - status
+      - priority
+      - description
+      - source
+      - needs_review
+      - reporter_id
+      - subject_id
+      type: object
+    CaseStatusResponse:
+      additionalProperties: false
+      properties:
+        created_at:
+          format: date-time
+          type: string
+        id:
+          type: integer
+        new_status:
+          type: string
+        old_status:
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+      required:
+      - id
+      - created_at
+      - updated_at
+      - old_status
+      - new_status
+      type: object
+    CaseStatusUpdateRequest:
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+      required:
+      - status
+      type: object
+    CaseTypeSourceMatrixItemResponse:
+      additionalProperties: false
+      properties:
+        case_count:
+          type: integer
+        case_date:
+          type: string
+        case_type:
+          type: string
+        report_source:
+          type: string
+      required:
+      - case_date
+      - case_type
+      - report_source
+      - case_count
+      type: object
+    CaseTypeSourceMatrixResponse:
+      additionalProperties: false
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/CaseTypeSourceMatrixItemResponse'
+          type: array
+      required:
+      - items
+      type: object
+    CommunicationCreateRequest:
+      additionalProperties: false
+      properties:
+        content:
+          type: string
+        direction:
+          type: string
+        parent_id:
+          type: integer
+        type:
+          type: string
+      required:
+      - content
+      - type
+      - direction
+      type: object
+    CommunicationResponse:
+      additionalProperties: false
+      properties:
+        content:
+          type: string
+        created_at:
+          format: date-time
+          type: string
+        direction:
+          type: string
+        id:
+          type: integer
+        parent_id:
+          type: integer
+        type:
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+      required:
+      - id
+      - created_at
+      - updated_at
+      - content
+      - type
+      - direction
+      type: object
+    CommunicationTimelineItem:
+      additionalProperties: false
+      properties:
+        count:
+          type: integer
+        hourly_interval:
+          type: string
+      required:
+      - hourly_interval
+      - count
+      type: object
+    CommunicationTimelineResponse:
+      additionalProperties: false
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/CommunicationTimelineItem'
+          type: array
+      required:
+      - items
+      type: object
+    CommunicationsMetrics:
+      additionalProperties: false
+      properties:
+        average_response_seconds:
+          type: integer
+        counts_per_case:
+          items:
+            $ref: '#/components/schemas/Distribution'
+          type: array
+        max_response_seconds:
+          type: integer
+      required:
+      - average_response_seconds
+      - max_response_seconds
+      - counts_per_case
+      type: object
+    CreateCaseRequest:
+      additionalProperties: false
+      properties:
+        description:
+          type: string
+        needs_review:
+          type: boolean
+        priority:
+          type: string
+        reporter_id:
+          type: integer
+        source:
+          type: string
+        subject_id:
+          type: integer
+        type:
+          type: string
+      required:
+      - description
+      - type
+      - priority
+      - source
+      - needs_review
+      - reporter_id
+      - subject_id
+      type: object
+    Distribution:
+      additionalProperties: false
+      properties:
+        count:
+          type: integer
+        name:
+          type: string
+      required:
+      - name
+      - count
+      type: object
+    DurationDistribution:
+      additionalProperties: false
+      properties:
+        duration_seconds:
+          type: number
+        status:
+          type: string
+      required:
+      - status
+      - duration_seconds
+      type: object
+    ErrorResponse:
+      additionalProperties: false
+      properties:
+        error:
+          type: string
+      required:
+      - error
+      type: object
+    EvidenceMetrics:
+      additionalProperties: false
+      properties:
+        average_per_case:
+          type: number
+        files_per_case:
+          items:
+            $ref: '#/components/schemas/Distribution'
+          type: array
+      required:
+      - files_per_case
+      - average_per_case
+      type: object
+    EvidenceResponse:
+      additionalProperties: false
+      properties:
+        case_id:
+          type: integer
+        content_type:
+          type: string
+        created_at:
+          format: date-time
+          type: string
+        description:
+          type: string
+        file_name:
+          type: string
+        file_size:
+          type: integer
+        id:
+          type: integer
+        metadata:
+          additionalProperties: true
+          title: JSON Data
+          type: object
+        source:
+          type: string
+        storage_hash:
+          type: string
+        submitter_id:
+          type: integer
+        updated_at:
+          format: date-time
+          type: string
+      required:
+      - id
+      - created_at
+      - updated_at
+      - case_id
+      - submitter_id
+      - file_name
+      - content_type
+      - storage_hash
+      - file_size
+      - source
+      - description
+      - metadata
+      type: object
+    GlobalSearchResponse:
+      additionalProperties: false
+      properties:
+        cases:
+          items:
+            $ref: '#/components/schemas/CaseResponse'
+          type: array
+        reporters:
+          items:
+            $ref: '#/components/schemas/ReporterResponse'
+          type: array
+        total_count:
+          type: integer
+      required:
+      - cases
+      - reporters
+      - total_count
+      type: object
+    ManualScanRequest:
+      additionalProperties: false
+      properties:
+        case_id:
+          type: integer
+      required:
+      - case_id
+      type: object
+    ReporterCreateRequest:
+      additionalProperties: false
+      properties:
+        email:
+          type: string
+        name:
+          type: string
+      required:
+      - email
+      - name
+      type: object
+    ReporterResponse:
+      additionalProperties: false
+      properties:
+        created_at:
+          format: date-time
+          type: string
+        email:
+          type: string
+        id:
+          type: integer
+        name:
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+      required:
+      - id
+      - created_at
+      - updated_at
+      - email
+      - name
+      type: object
+    ResolutionMetrics:
+      additionalProperties: false
+      properties:
+        average_seconds:
+          type: integer
+        daily_trends:
+          items:
+            $ref: '#/components/schemas/ResolutionTrend'
+          type: array
+      required:
+      - average_seconds
+      - daily_trends
+      type: object
+    ResolutionTrend:
+      additionalProperties: false
+      properties:
+        average_seconds:
+          type: integer
+        date:
+          format: date-time
+          type: string
+        resolved_count:
+          type: integer
+      required:
+      - date
+      - resolved_count
+      - average_seconds
+      type: object
+    ScanResponse:
+      additionalProperties: false
+      properties:
+        case_id:
+          type: integer
+        completed_at:
+          format: date-time
+          type: string
+        created_at:
+          format: date-time
+          type: string
+        id:
+          type: integer
+        scheduled_at:
+          format: date-time
+          type: string
+        started_at:
+          format: date-time
+          type: string
+        status:
+          type: string
+        subject_id:
+          type: integer
+        updated_at:
+          format: date-time
+          type: string
+      required:
+      - id
+      - created_at
+      - updated_at
+      - case_id
+      - subject_id
+      - status
+      - scheduled_at
+      type: object
+    StatusFlowGraph:
+      additionalProperties: false
+      properties:
+        links:
+          items:
+            $ref: '#/components/schemas/StatusFlowLink'
+          type: array
+        nodes:
+          items:
+            $ref: '#/components/schemas/StatusFlowNode'
+          type: array
+      required:
+      - nodes
+      - links
+      type: object
+    StatusFlowLink:
+      additionalProperties: false
+      properties:
+        source:
+          type: string
+        target:
+          type: string
+        value:
+          type: integer
+      required:
+      - source
+      - target
+      - value
+      type: object
+    StatusFlowNode:
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+      required:
+      - name
+      type: object
+    SubjectBlockedResponse:
+      additionalProperties: false
+      properties:
+        blocked:
+          type: boolean
+      required:
+      - blocked
+      type: object
+    SubjectCreateRequest:
+      additionalProperties: false
+      properties:
+        identifier:
+          type: string
+        type:
+          type: string
+      required:
+      - identifier
+      - type
+      type: object
+    SubjectResponse:
+      additionalProperties: false
+      properties:
+        created_at:
+          format: date-time
+          type: string
+        id:
+          type: integer
+        identifier:
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+      required:
+      - id
+      - created_at
+      - updated_at
+      - identifier
+      type: object
+    UpdateCaseRequest:
+      additionalProperties: false
+      properties:
+        description:
+          type: string
+        needs_review:
+          type: boolean
+        priority:
+          type: string
+        reporter_id:
+          type: integer
+        source:
+          type: string
+        status:
+          type: string
+        subject_id:
+          type: integer
+        type:
+          type: string
+      required:
+      - description
+      type: object
+info:
+  description: Provides administrative endpoints for managing the Portal.
+  title: Portal Admin API
+  version: unknown
+openapi: 3.0.0
+paths:
+  /api/abuse/analytics/blocklist/block-reasons:
+    get:
+      description: Retrieve a breakdown of block counts by block reason over a specified
+        time range.
+      parameters:
+      - description: Time range
+        in: query
+        name: time_range
+        schema:
+          type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockReasonListResponse'
+          description: Block reason counts
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid parameters
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Failed to retrieve block reason counts
+      summary: Get block reason counts
+      tags:
+      - Analytics
+  /api/abuse/analytics/cases:
+    get:
+      description: Retrieve overall case analytics with optional filtering
+      parameters:
+      - description: Ending index of the items to return (exclusive). Defaults to
+          10.
+        in: query
+        name: _end
+        schema:
+          type: integer
+      - description: Starting index of the items to return (0-based). Defaults to
+          0.
+        in: query
+        name: _start
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaseAnalyticsResponse'
+          description: Case analytics
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Get case analytics
+      tags:
+      - Analytics
+  /api/abuse/analytics/cases/7d:
+    get:
+      description: Retrieve case analytics for the last 7 days
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaseAnalyticsResponse'
+          description: Case analytics for the last 7 days
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Get 7-day case analytics
+      tags:
+      - Analytics
+  /api/abuse/analytics/cases/24h:
+    get:
+      description: Retrieve case analytics for the last 24 hours
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaseAnalyticsResponse'
+          description: Case analytics for the last 24 hours
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Get 24-hour case analytics
+      tags:
+      - Analytics
+  /api/abuse/analytics/cases/30d:
+    get:
+      description: Retrieve case analytics for the last 30 days
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaseAnalyticsResponse'
+          description: Case analytics for the last 30 days
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Get 30-day case analytics
+      tags:
+      - Analytics
+  /api/abuse/analytics/cases/status-flow:
+    get:
+      description: Retrieve status transition data for visualization
+      parameters:
+      - description: Time range
+        in: query
+        name: time_range
+        schema:
+          type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusFlowGraph'
+          description: Status flow data
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Get case status flow
+      tags:
+      - Analytics
+  /api/abuse/analytics/cases/time-series:
+    get:
+      description: Retrieve time-series metrics for cases (open, new, resolved) with
+        optional filtering
+      parameters:
+      - description: Filter by case type
+        in: query
+        name: case_type
+        schema:
+          items:
+            type: string
+          type: array
+      - description: Metric to retrieve
+        in: query
+        name: metric
+        schema:
+          type: object
+      - description: Filter by priority
+        in: query
+        name: priority
+        schema:
+          items:
+            type: string
+          type: array
+      - description: Time range
+        in: query
+        name: time_range
+        schema:
+          type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: integer
+                type: array
+          description: Time-series metrics data
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid parameters
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Failed to retrieve metrics
+      summary: Get case time-series metrics
+      tags:
+      - Analytics
+  /api/abuse/analytics/cases/type-source-matrix:
+    get:
+      description: Retrieve a breakdown of case counts by case type and report source
+        over a specified time range.
+      parameters:
+      - description: Time range
+        in: query
+        name: time_range
+        schema:
+          type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaseTypeSourceMatrixResponse'
+          description: Case type and source matrix data
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid parameters
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Failed to retrieve matrix
+      summary: Get case type and source matrix
+      tags:
+      - Analytics
+  /api/abuse/analytics/communications/timeline:
+    get:
+      description: Retrieve a timeline of communication counts per hour over a specified
+        time range.
+      parameters:
+      - description: Time range
+        in: query
+        name: time_range
+        schema:
+          type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommunicationTimelineResponse'
+          description: Communication timeline data
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid parameters
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Failed to retrieve timeline
+      summary: Get communication timeline
+      tags:
+      - Analytics
+  /api/abuse/blocklist:
+    get:
+      description: Retrieve a list of blocked content items with optional filtering
+        and pagination
+      parameters:
+      - description: Ending index of the items to return (exclusive). Defaults to
+          10.
+        in: query
+        name: _end
+        schema:
+          type: integer
+      - description: Starting index of the items to return (0-based). Defaults to
+          0.
+        in: query
+        name: _start
+        schema:
+          type: integer
+      - description: Global search query string.
+        in: query
+        name: q
+        schema:
+          type: string
+      responses:
+        "200":
+          description: List of blocked content items
+          headers:
+            X-Total-Count:
+              description: Total number of items
+              schema:
+                type: string
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid filter parameters
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Validation Failed
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      security:
+      - bearerAuth:
+        - login
+      summary: List Blocked Content
+      tags:
+      - Authenticated
+    post:
+      description: Add a new content item to the block list
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlockContentCreateRequest'
+        description: Block details
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Success
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockContentResponse'
+          description: Block created successfully
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Validation error
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Create block
+      tags:
+      - Blocklist
+  /api/abuse/blocklist/{hash}:
+    delete:
+      description: Removes content from the block list by its hash.
+      parameters:
+      - description: Multihash of the content to unblock
+        in: path
+        name: hash
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Content successfully unblocked
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid hash format
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Blocked content not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Unblock content
+      tags:
+      - Blocklist
+    get:
+      description: Retrieve details of a specific blocked content item by its hash
+      parameters:
+      - description: Multihash of the blocked content
+        in: path
+        name: hash
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockContentResponse'
+          description: Blocked content details
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid hash format
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Blocked content not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Get blocked content
+      tags:
+      - Blocklist
+  /api/abuse/blocklist/subjects/{subject_id}/blocked:
+    get:
+      description: Check if a subject ID is blocked
+      parameters:
+      - description: ID of the subject to check
+        in: path
+        name: subject_id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubjectBlockedResponse'
+          description: Subject blocked status
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid subject_id format
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Failed to check block status
+      summary: Check subject blocked status
+      tags:
+      - Blocklist
+  /api/abuse/cases:
+    get:
+      description: Retrieves a list of abuse cases with filtering and pagination
+      parameters:
+      - description: Ending index of the items to return (exclusive). Defaults to
+          10.
+        in: query
+        name: _end
+        schema:
+          type: integer
+      - description: Starting index of the items to return (0-based). Defaults to
+          0.
+        in: query
+        name: _start
+        schema:
+          type: integer
+      - description: Global search query string.
+        in: query
+        name: q
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid filter parameters
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Validation Failed
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      security:
+      - bearerAuth:
+        - login
+      summary: List Cases
+      tags:
+      - Authenticated
+    post:
+      description: Creates a new abuse case
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCaseRequest'
+        description: Case details
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Success
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaseResponse'
+          description: Case created successfully
+          headers:
+            Location:
+              description: URL of the newly created case
+              schema:
+                type: string
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Validation Error
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Create Case
+      tags:
+      - Cases
+  /api/abuse/cases/{caseId}/scans:
+    get:
+      description: Retrieve a list of scans for a specific case
+      parameters:
+      - description: Case ID
+        in: path
+        name: caseId
+        required: true
+        schema:
+          type: integer
+      - description: Ending index of the items to return (exclusive). Defaults to
+          10.
+        in: query
+        name: _end
+        schema:
+          type: integer
+      - description: Starting index of the items to return (0-based). Defaults to
+          0.
+        in: query
+        name: _start
+        schema:
+          type: integer
+      - description: Global search query string.
+        in: query
+        name: q
+        schema:
+          type: string
+      responses:
+        "200":
+          description: List of scans
+          headers:
+            X-Total-Count:
+              description: Total number of items
+              schema:
+                type: string
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid case ID format or filter parameters
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Case not found
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Validation Failed
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      security:
+      - bearerAuth:
+        - login
+      summary: List case scans
+      tags:
+      - Authenticated
+    post:
+      description: Initiates a scan for the subject associated with the case.
+      parameters:
+      - description: Case ID
+        in: path
+        name: caseId
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ManualScanRequest'
+        description: Manual scan request details
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Success
+        "202":
+          content:
+            application/json:
+              schema:
+                additionalProperties:
+                  type: string
+                type: object
+          description: Scan initiated successfully
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid request payload or case ID format
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Case not found
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Validation Error
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Create scan request for case subject
+      tags:
+      - Scans
+  /api/abuse/cases/{caseId}/scans/{scanId}:
+    get:
+      description: Retrieve details of a specific scan
+      parameters:
+      - description: Case ID
+        in: path
+        name: caseId
+        required: true
+        schema:
+          type: integer
+      - description: Scan ID
+        in: path
+        name: scanId
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScanResponse'
+          description: Scan details
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid scan ID format
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Scan not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Get scan
+      tags:
+      - Scans
+  /api/abuse/cases/{caseId}/scans/{scanId}/results:
+    get:
+      description: Retrieve results of a specific scan with filtering, sorting, and
+        pagination
+      parameters:
+      - description: Case ID
+        in: path
+        name: caseId
+        required: true
+        schema:
+          type: integer
+      - description: Scan ID
+        in: path
+        name: scanId
+        required: true
+        schema:
+          type: integer
+      - description: Ending index of the items to return (exclusive). Defaults to
+          10.
+        in: query
+        name: _end
+        schema:
+          type: integer
+      - description: Starting index of the items to return (0-based). Defaults to
+          0.
+        in: query
+        name: _start
+        schema:
+          type: integer
+      - description: Global search query string.
+        in: query
+        name: q
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Scan results
+          headers:
+            X-Total-Count:
+              description: Total number of items
+              schema:
+                type: string
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid scan ID format or filter parameters
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Scan not found
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Validation Failed
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      security:
+      - bearerAuth:
+        - login
+      summary: Get scan results
+      tags:
+      - Authenticated
+  /api/abuse/cases/{id}:
+    get:
+      description: Retrieves a specific abuse case by ID
+      parameters:
+      - description: Case ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaseResponse'
+          description: Case details
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Case not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Get Case
+      tags:
+      - Cases
+    patch:
+      description: Updates an existing abuse case by ID
+      parameters:
+      - description: Case ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCaseRequest'
+        description: Updated case details
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaseResponse'
+          description: Case updated successfully
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Case not found
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Validation Error
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Update Case
+      tags:
+      - Cases
+  /api/abuse/cases/{id}/communications:
+    get:
+      description: Retrieve a list of communications for a specific case
+      parameters:
+      - description: Case ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - description: Ending index of the items to return (exclusive). Defaults to
+          10.
+        in: query
+        name: _end
+        schema:
+          type: integer
+      - description: Starting index of the items to return (0-based). Defaults to
+          0.
+        in: query
+        name: _start
+        schema:
+          type: integer
+      - description: Global search query string.
+        in: query
+        name: q
+        schema:
+          type: string
+      responses:
+        "200":
+          description: List of communications
+          headers:
+            X-Total-Count:
+              description: Total number of items
+              schema:
+                type: string
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid case ID format or filter parameters
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Case not found
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Validation Failed
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      security:
+      - bearerAuth:
+        - login
+      summary: List case communications
+      tags:
+      - Authenticated
+    post:
+      description: Add a new communication to a case
+      parameters:
+      - description: Case ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommunicationCreateRequest'
+        description: Communication details
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Success
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommunicationResponse'
+          description: Communication added successfully
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid request payload
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Case not found
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Validation Error
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Add case communication
+      tags:
+      - Communications
+  /api/abuse/cases/{id}/evidence:
+    get:
+      description: Retrieve a list of evidence items for a specific case
+      parameters:
+      - description: Case ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      - description: Ending index of the items to return (exclusive). Defaults to
+          10.
+        in: query
+        name: _end
+        schema:
+          type: integer
+      - description: Starting index of the items to return (0-based). Defaults to
+          0.
+        in: query
+        name: _start
+        schema:
+          type: integer
+      - description: Global search query string.
+        in: query
+        name: q
+        schema:
+          type: string
+      responses:
+        "200":
+          description: List of evidence items
+          headers:
+            X-Total-Count:
+              description: Total number of items
+              schema:
+                type: string
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid case ID format or filter parameters
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Case not found
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Validation Failed
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      security:
+      - bearerAuth:
+        - login
+      summary: List case evidence
+      tags:
+      - Authenticated
+    post:
+      description: Uploads a file as evidence for a specific case
+      parameters:
+      - description: Case ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              additionalProperties: false
+              properties:
+                file:
+                  type: string
+              required:
+              - file
+              type: object
+        description: The evidence file to upload
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Success
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvidenceResponse'
+          description: Evidence created successfully
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid request payload or file upload
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Case not found
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Validation Error
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Upload evidence file
+      tags:
+      - Evidence
+  /api/abuse/cases/{id}/status:
+    put:
+      description: Update the status of an abuse case
+      parameters:
+      - description: Case ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CaseStatusUpdateRequest'
+        description: New status details
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaseStatusResponse'
+          description: Case status updated successfully
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid request payload or case ID format
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Case not found
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Validation error
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Update case status
+      tags:
+      - Cases
+  /api/abuse/evidence/{id}:
+    get:
+      description: Retrieve metadata for a specific evidence item by ID
+      parameters:
+      - description: Evidence ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvidenceResponse'
+          description: Evidence metadata
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid evidence ID format
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Evidence not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Get evidence metadata
+      tags:
+      - Evidence
+  /api/abuse/evidence/{id}/content:
+    get:
+      description: Retrieve the content of a specific evidence item by ID
+      parameters:
+      - description: Evidence ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/octet-stream:
+              schema:
+                type: object
+          description: Evidence content
+          headers:
+            Content-Disposition:
+              description: Suggested filename for download
+              schema:
+                type: string
+            Content-Type:
+              description: The MIME type of the file content
+              schema:
+                type: string
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid evidence ID format
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Evidence not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Get evidence content
+      tags:
+      - Evidence
+  /api/abuse/reporters:
+    get:
+      description: Retrieve a list of reporters with optional filtering and pagination
+      parameters:
+      - description: Ending index of the items to return (exclusive). Defaults to
+          10.
+        in: query
+        name: _end
+        schema:
+          type: integer
+      - description: Starting index of the items to return (0-based). Defaults to
+          0.
+        in: query
+        name: _start
+        schema:
+          type: integer
+      - description: Global search query string.
+        in: query
+        name: q
+        schema:
+          type: string
+      responses:
+        "200":
+          description: List of reporters
+          headers:
+            X-Total-Count:
+              description: Total number of items
+              schema:
+                type: string
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid filter parameters
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Validation Failed
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      security:
+      - bearerAuth:
+        - login
+      summary: List reporters
+      tags:
+      - Authenticated
+    post:
+      description: Create a new reporter
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReporterCreateRequest'
+        description: Reporter details
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Success
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReporterResponse'
+          description: Reporter created successfully
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Validation error
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Create reporter
+      tags:
+      - Reporters
+  /api/abuse/reporters/{id}:
+    get:
+      description: Retrieve a specific reporter by ID
+      parameters:
+      - description: Reporter ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReporterResponse'
+          description: Reporter details
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid reporter ID format
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Reporter not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Get reporter
+      tags:
+      - Reporters
+  /api/abuse/search/cases:
+    get:
+      description: Search for abuse cases by query string with pagination and sorting
+      parameters:
+      - description: Ending index of the items to return (exclusive). Defaults to
+          10.
+        in: query
+        name: _end
+        schema:
+          type: integer
+      - description: Starting index of the items to return (0-based). Defaults to
+          0.
+        in: query
+        name: _start
+        schema:
+          type: integer
+      - description: Global search query string.
+        in: query
+        name: q
+        schema:
+          type: string
+      responses:
+        "200":
+          description: List of matching cases
+          headers:
+            X-Total-Count:
+              description: Total number of items
+              schema:
+                type: string
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid request parameters
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Validation Failed
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      security:
+      - bearerAuth:
+        - login
+      summary: Search cases
+      tags:
+      - Authenticated
+  /api/abuse/search/global:
+    get:
+      description: Search across multiple entities (cases, reporters) by query string
+        with pagination
+      parameters:
+      - description: Ending index of the items to return (exclusive). Defaults to
+          10.
+        in: query
+        name: _end
+        schema:
+          type: integer
+      - description: Starting index of the items to return (0-based). Defaults to
+          0.
+        in: query
+        name: _start
+        schema:
+          type: integer
+      - description: Global search query string.
+        in: query
+        name: q
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GlobalSearchResponse'
+          description: Global search results
+          headers:
+            X-Total-Count:
+              description: Total number of items
+              schema:
+                type: string
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid request parameters
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Global search
+      tags:
+      - Search
+  /api/abuse/subjects:
+    get:
+      description: Retrieve a list of subjects with optional filtering and pagination
+      parameters:
+      - description: Ending index of the items to return (exclusive). Defaults to
+          10.
+        in: query
+        name: _end
+        schema:
+          type: integer
+      - description: Starting index of the items to return (0-based). Defaults to
+          0.
+        in: query
+        name: _start
+        schema:
+          type: integer
+      - description: Global search query string.
+        in: query
+        name: q
+        schema:
+          type: string
+      responses:
+        "200":
+          description: List of subjects
+          headers:
+            X-Total-Count:
+              description: Total number of items
+              schema:
+                type: string
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid filter parameters
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Validation Failed
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      security:
+      - bearerAuth:
+        - login
+      summary: List subjects
+      tags:
+      - Authenticated
+    post:
+      description: Create a new subject
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubjectCreateRequest'
+        description: Subject details
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Success
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubjectResponse'
+          description: Subject created successfully
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Validation error
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Create subject
+      tags:
+      - Subjects
+  /api/abuse/subjects/{id}:
+    get:
+      description: Retrieve a specific subject by ID
+      parameters:
+      - description: Subject ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubjectResponse'
+          description: Subject details
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid subject ID format
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Subject not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Get subject
+      tags:
+      - Subjects
+servers:
+- url: /api

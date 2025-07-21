@@ -1,0 +1,27 @@
+Dear Lumeweb Abuse Team,
+
+We are writing to report an active phishing campaign targeting customers of "Example Bank" that is being hosted via your infrastructure.
+
+Campaign Details:
+Type: Financial Credential Phishing
+Target: Banking customers
+First Observed: November 16, 2023
+Threat Level: High (Active Scam)
+Technical Indicators:
+Phishing URL: https://ipfs.io/ipfs/bafyreibhe4udtxq3yszyggvwngcnhlqhsacyfikr7erbun7di555ptoj6e (hosting fake login page)
+Description: The fraudulent page is a replica of Example Bank's online portal. It prompts victims to enter sensitive banking credentials.
+
+Requested Action:
+Immediate takedown of the IPFS-hosted content
+Investigation of the originating IP (if applicable)
+Notification of any connected accounts
+
+We appreciate your prompt attention to this matter. Please acknowledge receipt and provide a status update within 24 hours.
+
+Abuse Desk: abuse@example.org
+Phone: +1 (555) 123-4567
+Regards,
+Alex Carter
+Security Response Team
+CyberDefense Inc.
+https://www.cyberdefense.example/abuse

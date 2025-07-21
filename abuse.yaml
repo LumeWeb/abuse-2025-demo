@@ -1,0 +1,640 @@
+components:
+  schemas:
+    AbuseReportRequest:
+      additionalProperties: false
+      properties:
+        abuse_type:
+          type: string
+        additional_details:
+          type: string
+        description:
+          type: string
+        email:
+          type: string
+        location:
+          type: string
+      required:
+      - email
+      - location
+      - abuse_type
+      - description
+      type: object
+    AbuseReportResponse:
+      additionalProperties: false
+      properties:
+        access_token:
+          type: string
+        case_reference:
+          type: string
+        expires_at:
+          format: date-time
+          type: string
+        received_at:
+          format: date-time
+          type: string
+      required:
+      - case_reference
+      type: object
+    AttachmentUploadResponse:
+      additionalProperties: false
+      properties:
+        content_type:
+          type: string
+        filename:
+          type: string
+        message:
+          type: string
+        size:
+          type: integer
+      required:
+      - message
+      - filename
+      - size
+      - content_type
+      type: object
+    CommunicationResponse:
+      additionalProperties: false
+      properties:
+        content:
+          type: string
+        created_at:
+          format: date-time
+          type: string
+        direction:
+          type: string
+        id:
+          type: integer
+        parent_id:
+          type: integer
+        type:
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+      required:
+      - id
+      - created_at
+      - updated_at
+      - content
+      - type
+      - direction
+      type: object
+    ErrorResponse:
+      additionalProperties: false
+      properties:
+        error:
+          type: string
+      required:
+      - error
+      type: object
+    EvidenceResponse:
+      additionalProperties: false
+      properties:
+        case_id:
+          type: integer
+        content_type:
+          type: string
+        created_at:
+          format: date-time
+          type: string
+        description:
+          type: string
+        file_name:
+          type: string
+        file_size:
+          type: integer
+        id:
+          type: integer
+        metadata:
+          additionalProperties: true
+          title: JSON Data
+          type: object
+        source:
+          type: string
+        storage_hash:
+          type: string
+        submitter_id:
+          type: integer
+        updated_at:
+          format: date-time
+          type: string
+      required:
+      - id
+      - created_at
+      - updated_at
+      - case_id
+      - submitter_id
+      - file_name
+      - content_type
+      - storage_hash
+      - file_size
+      - source
+      - description
+      - metadata
+      type: object
+    JWTResponse:
+      additionalProperties: false
+      properties:
+        access_token:
+          type: string
+        expires_at:
+          format: date-time
+          type: string
+      required:
+      - access_token
+      - expires_at
+      type: object
+    PublicCaseResponse:
+      additionalProperties: false
+      properties:
+        attachments:
+          items:
+            $ref: '#/components/schemas/EvidenceResponse'
+          type: array
+        communications:
+          items:
+            $ref: '#/components/schemas/CommunicationResponse'
+          type: array
+        created_at:
+          format: date-time
+          type: string
+        description:
+          type: string
+        reference_number:
+          type: string
+        scans:
+          items:
+            $ref: '#/components/schemas/ScanResponse'
+          type: array
+        status:
+          type: string
+        type:
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+      required:
+      - reference_number
+      - status
+      - type
+      - description
+      - created_at
+      - updated_at
+      type: object
+    ScanResponse:
+      additionalProperties: false
+      properties:
+        case_id:
+          type: integer
+        completed_at:
+          format: date-time
+          type: string
+        created_at:
+          format: date-time
+          type: string
+        id:
+          type: integer
+        scheduled_at:
+          format: date-time
+          type: string
+        started_at:
+          format: date-time
+          type: string
+        status:
+          type: string
+        subject_id:
+          type: integer
+        updated_at:
+          format: date-time
+          type: string
+      required:
+      - id
+      - created_at
+      - updated_at
+      - case_id
+      - subject_id
+      - status
+      - scheduled_at
+      type: object
+    TokenRefreshRequest:
+      additionalProperties: false
+      properties:
+        token:
+          type: string
+      required:
+      - token
+      type: object
+    TokenRefreshResponse:
+      additionalProperties: false
+      properties:
+        token:
+          type: string
+        valid_days:
+          type: integer
+      required:
+      - token
+      - valid_days
+      type: object
+    ValidateTokenResponse:
+      additionalProperties: false
+      properties:
+        reference:
+          type: string
+        valid:
+          type: boolean
+      required:
+      - valid
+      - reference
+      type: object
+info:
+  description: Public API for user submission and tracking of abuse reports.
+  title: Abuse Report API
+  version: v0.0.0-20250721203214-49d4ee700bee
+openapi: 3.0.0
+paths:
+  /api/cases/{reference}:
+    get:
+      description: Retrieves the details of a specific abuse case, including communications,
+        scans, and evidence.
+      parameters:
+      - description: The case reference number
+        in: path
+        name: reference
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicCaseResponse'
+          description: Case details retrieved successfully
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Get abuse case details
+  /api/cases/{reference}/attachments:
+    post:
+      description: Uploads a file attachment as evidence for a specific abuse case.
+      parameters:
+      - description: The case reference number
+        in: path
+        name: reference
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              additionalProperties: false
+              properties:
+                file:
+                  type: string
+              required:
+              - file
+              type: object
+        description: File upload
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Success
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttachmentUploadResponse'
+          description: File uploaded successfully
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Upload an attachment to an abuse case
+  /api/cases/{reference}/communications:
+    post:
+      description: Adds a new communication (comment) to a specific abuse case.
+      parameters:
+      - description: The case reference number
+        in: path
+        name: reference
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              additionalProperties: false
+              properties:
+                Content:
+                  type: string
+              required:
+              - Content
+              type: object
+        description: Comment content
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Success
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommunicationResponse'
+          description: Comment added successfully
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Add a comment to an abuse case
+  /api/reports:
+    post:
+      description: Allows users to submit a new abuse report with details and attachments.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AbuseReportRequest'
+        description: Abuse report details
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Success
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AbuseReportResponse'
+          description: Report submitted successfully
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid request payload
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Submit a new abuse report
+  /api/tokens/jwt:
+    post:
+      description: Exchanges a valid abuse report access token for a JWT, setting
+        an authentication cookie.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefreshRequest'
+        description: Token exchange request
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JWTResponse'
+          description: JWT generated and cookie set
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid request payload
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid access token
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Exchange access token for JWT
+  /api/tokens/refresh:
+    post:
+      description: Refreshes an existing access token, returning a new token with
+        extended validity.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefreshRequest'
+        description: Token refresh request
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefreshResponse'
+          description: Token refreshed successfully
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid request payload
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid access token
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Refresh an abuse report access token
+  /api/tokens/validate:
+    post:
+      description: Checks if a given access token is valid and returns the associated
+        case reference.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefreshRequest'
+        description: Token validation request
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateTokenResponse'
+          description: Token is valid
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid request payload
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid or expired token
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Not found
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Internal server error
+      summary: Validate an abuse report access token
+servers:
+- url: /api
