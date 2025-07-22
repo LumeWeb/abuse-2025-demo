@@ -48,7 +48,7 @@ The repository includes several sample abuse reports that demonstrate different 
 * `phishing.txt` - Report of phishing campaign  
 * `spam.txt` - Report of spam activity
 
-These can be used as templates or test cases when submitting reports via email or the API.
+These can be used as templates or test cases when submitting reports via email. The user side reporting API does not run the classification code since the user is able to select the type.
 
 **IV. API Access**
 
